@@ -1,7 +1,7 @@
 from django.urls import path
-import menu.views as menu
+from menu.views import HomeView
 
 urlpatterns = [
-    path('', menu.index, name='index'),
-    path('/<int:pk>', menu.index, name='index')
+    path('', HomeView.as_view(), name='home'),
+    path('/<str:url>', HomeView.as_view())
 ]

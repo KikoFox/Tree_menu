@@ -9,11 +9,16 @@ class Menu(models.Model):
     Slug is designed to use in templatetag 'draw menu' for displaying menu
     """
 
+    is_visible = models.BooleanField(default=True, verbose_name='Visibility')
+    order = models.IntegerField(default=10, verbose_name='Order')
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=20, verbose_name='Menu title')
     slug = models.SlugField(max_length=255, verbose_name='Slug', null=True,
                             help_text='Use it in templatetag for displaying menu')
     named_url = models.CharField(max_length=255, verbose_name='Named URL', blank=True,
                                  help_text='Named url from your urls.py file')
+    objects = models.Manager()
 
     class Meta:
         verbose_name = 'menu'
@@ -40,6 +45,10 @@ class MenuItem(models.Model):
     And only then 'url' field.
     """
 
+    is_visible = models.BooleanField(default=True, verbose_name='Visibility')
+    order = models.IntegerField(default=10, verbose_name='Order')
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
     menu = models.ForeignKey(Menu, related_name='items',
                              verbose_name='menu', blank=True, null=True,
                              on_delete=models.CASCADE)
@@ -51,6 +60,7 @@ class MenuItem(models.Model):
     url = models.CharField(max_length=255, verbose_name='Link', blank=True)
     named_url = models.CharField(max_length=255, verbose_name='Named URL', blank=True,
                                  help_text='Named url from your urls.py file')
+    objects = models.Manager()
 
     class Meta:
         verbose_name = 'menu item'
