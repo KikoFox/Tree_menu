@@ -5,19 +5,18 @@ from django.urls import reverse
 class Menu(models.Model):
 
     """
-    Model for menu item. Has title and slug fields.
-    Slug is designed to use in templatetag 'draw menu' for displaying menu
+    Модель для Menu. Имеет поля title и slug.
     """
 
-    is_visible = models.BooleanField(default=True, verbose_name='Visibility')
-    order = models.IntegerField(default=10, verbose_name='Order')
+    is_visible = models.BooleanField(default=True, verbose_name='Видимость поля')
+    order = models.IntegerField(default=10, verbose_name='Порядок отображения')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    title = models.CharField(max_length=20, verbose_name='Menu title')
+    title = models.CharField(max_length=20, verbose_name='Заголовок меню')
     slug = models.SlugField(max_length=255, verbose_name='Slug', null=True,
-                            help_text='Use it in templatetag for displaying menu')
+                            help_text='Используйте его templatetag для отображения меню')
     named_url = models.CharField(max_length=255, verbose_name='Named URL', blank=True,
-                                 help_text='Named url from your urls.py file')
+                                 help_text='Именованный URL-адрес из вашего файла urls.py')
     objects = models.Manager()
 
     class Meta:
@@ -38,11 +37,12 @@ class Menu(models.Model):
 class MenuItem(models.Model):
 
     """
-    Model for menu item. Has menu, parent, title, url fields.
-    Menu field is only requied for top level items.
-    You can provide any item in parent field and it will become relative for this item.
-    If you'll use 'named url' field, get_url method will use it firstly to generate url.
-    And only then 'url' field.
+    Модель для MenuItem. Имеет поля menu, parent, title, поля URL.
+    Поле menu требуется только для элементов верхнего уровня.
+    Вы можете указать любой элемент в родительском поле, и он станет относительным для этого элемента.
+    Если вы будете использовать поле «именованный URL-адрес», метод get_url будет использовать
+    его в первую очередь для генерации URL-адреса.
+    И только потом поле 'url'.
     """
 
     is_visible = models.BooleanField(default=True, verbose_name='Visibility')
